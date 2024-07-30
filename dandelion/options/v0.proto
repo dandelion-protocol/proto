@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package dandelion.options.v0;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+  bool zeroize = 202407301;
+}
+
+extend google.protobuf.FieldOptions {
+  uint32 fixed_length = 202407302;
+  IntType int_type = 202407303;
+}
+
+enum IntType {
+  UNSPECIFIED = 0;
+  S8 = 1;
+  S16 = 2;
+  S32 = 3;
+  S64 = 4;
+  U8 = 5;
+  U16 = 6;
+  U32 = 7;
+  U64 = 8;
+}

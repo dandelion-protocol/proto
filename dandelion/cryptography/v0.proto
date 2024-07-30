@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package dandelion.cryptography.v0;
+
+import "dandelion/options/v0.proto";
+
+message GenericSecret {
+  option (dandelion.options.v0.zeroize) = true;
+  bytes raw_bytes = 1;
+}
+
+message Digest {
+  oneof digest {
+    bytes sha256_digest = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message CipherSecret {
+  option (dandelion.options.v0.zeroize) = true;
+  oneof key {
+    bytes xchacha20_key = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message CipherNonce {
+  oneof nonce {
+    bytes xchacha20_nonce = 1 [(dandelion.options.v0.fixed_length) = 12];
+  }
+}
+
+message CipherTag {
+  oneof tag {
+    bytes poly1305_tag = 1 [(dandelion.options.v0.fixed_length) = 16];
+  }
+}
+
+message SealingSecret {
+  option (dandelion.options.v0.zeroize) = true;
+  oneof private_key {
+    bytes x25519_private_key = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message SealingShare {
+  oneof public_key {
+    bytes x25519_public_key = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message SigningSecret {
+  option (dandelion.options.v0.zeroize) = true;
+  oneof private_key {
+    bytes ed25519_private_key = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message SigningIdentity {
+  oneof public_key {
+    bytes ed25519_public_key = 1 [(dandelion.options.v0.fixed_length) = 32];
+  }
+}
+
+message Signature {
+  oneof signature {
+    bytes ed25519_signature = 1 [(dandelion.options.v0.fixed_length) = 64];
+  }
+}

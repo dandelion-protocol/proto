@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package dandelion.bundle.v0;
+
+import "dandelion/options/v0.proto";
+import "dandelion/cryptography/v0.proto";
+
+message Bundle {
+  message Chunk {
+    uint32 page = 1;
+    uint32 start = 2 [(dandelion.options.v0.int_type) = U16];
+    uint32 end = 3 [(dandelion.options.v0.int_type) = U16];
+  }
+
+  message File {
+    string filename = 1;
+    uint64 content_length = 2;
+    uint32 content_type = 3 [(dandelion.options.v0.int_type) = U16];
+    uint32 content_language = 4 [(dandelion.options.v0.int_type) = U16];
+    uint32 content_encoding = 5 [(dandelion.options.v0.int_type) = U16];
+    uint32 cipher = 6 [(dandelion.options.v0.int_type) = U16];
+    repeated Chunk chunks = 7;
+  }
+
+  dandelion.cryptography.v0.SigningIdentity creator = 1;
+  repeated dandelion.cryptography.v0.Digest pages = 2;
+  repeated dandelion.cryptography.v0.CipherSecret ciphers = 3;
+  repeated string content_types = 4;
+  repeated string content_languages = 5;
+  repeated string content_encodings = 6;
+  repeated File files = 7;
+}
